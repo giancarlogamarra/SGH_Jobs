@@ -8,5 +8,8 @@ namespace EntidadesNegocio
     {
         public int MyProperty { get; set; }
         public string CMP { get; set; }
+        public Medico() {
+
+        }
     }
 }
