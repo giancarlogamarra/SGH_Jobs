@@ -8,7 +8,8 @@ namespace EntidadesNegocio
     {
         public int MyProperty { get; set; }
         public string CMP { get; set; }
-        public Medico() {
+        public Medico(string cmp) {
+            this.CMP = cmp;
 
         }
     }
