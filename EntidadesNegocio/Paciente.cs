@@ -8,6 +8,7 @@ namespace EntidadesNegocio
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public DateTime FechaDeNacimiento { get; set; }
+        public bool sexo { get; set; }
         public Paciente(string dni, string nombre, string apellido, DateTime fechadenacimiento) {
             this.Dni = dni;
             this.Nombre = nombre;
