@@ -13,6 +13,7 @@ namespace EntidadesNegocio
             this.CMP = cmp;
             this.Nombre = nombre;
             this.Especialidad = especialidad;
+
         }
     }
 }
