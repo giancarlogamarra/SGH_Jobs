@@ -7,5 +7,6 @@ namespace EntidadesNegocio
     class Medico
     {
         public int MyProperty { get; set; }
+        public string CMP { get; set; }
     }
 }
