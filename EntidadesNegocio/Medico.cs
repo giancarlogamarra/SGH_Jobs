@@ -8,10 +8,12 @@ namespace EntidadesNegocio
     {
         public string Nombre { get; set; }
         public string CMP { get; set; }
-        public Medico(string cmp,string nombre) {
+        public string Especialidad { get; set; }
+        public Medico(string cmp,string nombre, string especialidad) {
             this.CMP = cmp;
             this.Nombre = nombre;
-            
+            this.Especialidad = especialidad;
+
         }
     }
 }
