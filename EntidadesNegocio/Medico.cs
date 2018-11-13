@@ -6,11 +6,12 @@ namespace EntidadesNegocio
 {
     class Medico
     {
-        public int MyProperty { get; set; }
+        public string Nombre { get; set; }
         public string CMP { get; set; }
-        public Medico(string cmp) {
+        public Medico(string cmp,string nombre) {
             this.CMP = cmp;
-
+            this.Nombre = nombre;
+            
         }
     }
 }
