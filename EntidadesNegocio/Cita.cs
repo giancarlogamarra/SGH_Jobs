@@ -6,5 +6,6 @@ namespace EntidadesNegocio
 {
     class CIta
     {
+        public string COD_cita { get; set; }
     }
 }
