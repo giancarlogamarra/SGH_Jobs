@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EntidadesNegocio
+namespace Entities
 {
-    class CIta
+    public class Cita
     {
-        public string COD_cita { get; set; }
-        public string COD_especialidad { get; set; }
-        public CIta() {
+        public string COD { get; set; }
+        public Paciente Paciente { get; set; }
+        public Doctor Doctor { get; set; }
+        public string Tipo { get; set; }
+        public string Estado { get; set; }
 
+        public Cita(string cod, Paciente paciente, Doctor doctor, string tipo, string estado)
+        {
+            COD = cod;
+            Paciente = paciente;
+            Doctor = doctor;
+            Tipo = tipo;
+            Estado = estado;
         }
     }
 }
