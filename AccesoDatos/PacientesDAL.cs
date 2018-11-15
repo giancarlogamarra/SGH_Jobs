@@ -1,4 +1,4 @@
-﻿using EntidadesNegocio;
+﻿using Entities;
 using System.Reflection;
 
 namespace AccesoDatos

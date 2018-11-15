@@ -1,5 +1,5 @@
 ﻿using AccesoDatos;//DataAccess
-using EntidadesNegocio;//Entities
+using Entities;//Entities
 using System.Collections.Generic;
 using System.IO;
 
