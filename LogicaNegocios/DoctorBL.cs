@@ -1,74 +1,39 @@
 ﻿using System;
-using AccesoDatos;
-using Entities;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using Entities;//Para clase Doctor
+using System.Collections.Generic;//Para List<>
+using System.Threading.Tasks;//Para Task
+using DataAccess;//Para DoctorDAL
 
-namespace LogicaNegocios
+namespace BusinessLayer
 {
     public class DoctorBL
     {
-        public static List<Doctor> Listdoctores;
-        public List<Doctor> GetDoctores()
+        DoctorDAL dal = new DoctorDAL();//variable dal de clase DoctorDAL para ejecutar todas las funciones de esta clase
+        //TOdas las funciones estan en DoctorDAL, enviamos los parámetros necesarios para cada función
+        public async Task<string> InsertDoctorAsync(Doctor Doctor)//Task: operacion asincrona q devuelve un valor <value>
         {
-            string path = DoctoresDAL.ConexionDoctores();
-            string[] lines = System.IO.File.ReadAllLines($"{path}\\BD\\Doctores.txt");
-            Listdoctores = new List<Doctor>();
-            foreach (var item in lines)
-            {
-                string Dni = item.Split(',')[0];
-                string Nombre = item.Split(',')[1];
-                string Apellido = item.Split(',')[2];
-                string CMP = item.Split(',')[3];
-                string Especialidad = item.Split(',')[4];
-                Doctor d = new Doctor(Dni, Nombre, Apellido, CMP, Especialidad);
-                Listdoctores.Add(d);
-            }
-            return Listdoctores;
+            string respuesta = await dal.InsertDoctorAsync(Doctor);//await: el método asincrónico no puede continuar hasta que se complete el proceso 
+            return respuesta;//retorna una cadena
         }
-        public void UpdateDoctor(string dni, Doctor doctor)
+        public async Task<List<Doctor>> GetDoctorsAsync()//Task: operacion asincrona q devuelve un valor <value>
         {
-            foreach (Doctor item in Listdoctores)
-            {
-                if (item.DNI == dni)
-                {
-                    item.Nombre = doctor.Nombre;
-                    item.Apellido = doctor.Apellido;
-                    item.CMP = doctor.CMP;
-                    item.Especialidad = doctor.Especialidad;
-                }
-            }
-            UpdateDataBase();
+            List<Doctor> Doctors = await dal.GetDoctorAsync();//await: el método asincrónico no puede continuar hasta que se complete el proceso 
+            return Doctors;//retorna una lista
         }
-
-        public void InsertDoctor(Doctor doctor)
+        public async Task<Doctor> GetOneDoctorAsync(int IdDoctor)
         {
-            Listdoctores.Add(doctor);
-            UpdateDataBase();
+            Doctor Doctor = await dal.GetOneDoctorAsync(IdDoctor);
+            return Doctor;//retorna un objeto de clase Doctor
         }
-
-        public int DeleteDoctor(string Dni)
+        public async Task<string> UpdateDoctorAsync(Doctor Doctor)
         {
-            int elementsRemoved = Listdoctores.RemoveAll(x => x.DNI == Dni);
-            UpdateDataBase();
-            return elementsRemoved;
+            string respuesta = await dal.UpdateDoctorAsync(Doctor);
+            return respuesta;//retorna una cadena
         }
-
-        private int UpdateDataBase()
+        public async Task<string> DeleteDoctorAsync(int IdDoctor)
         {
-            string path = DoctoresDAL.ConexionDoctores();
-            int updateLines = 0;
-            using (StreamWriter outputFile = new StreamWriter($"{path}\\BD\\Doctores.txt"))
-            {
-                foreach (var item in Listdoctores)
-                {
-                    string line = $"{item.DNI},{item.Nombre},{item.Apellido},{item.CMP},{item.Especialidad}";
-                    outputFile.WriteLine(line);
-                    updateLines++;
-                }
-            }
-            return updateLines;
+            string respuesta = await dal.DeleteDoctorAsync(IdDoctor);
+            return respuesta;//retorna una cadena
         }
     }
 }

@@ -1,74 +1,39 @@
-﻿using AccesoDatos;//DataAccess
-using Entities;//Entities
-using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using Entities;//Para clase Paciente
+using System.Collections.Generic;//Para List<>
+using System.Threading.Tasks;//Para Task
+using DataAccess;//Para PacienteDAL
 
-namespace LogicaNegocios
+namespace BusinessLayer
 {
     public class PacienteBL
     {
-        public static List<Paciente> Listpacientes;
-
-        public List<Paciente> GetPacientes()
+        PacienteDAL dal = new PacienteDAL();//variable dal de clase PacienteDAL para ejecutar todas las funciones de esta clase
+        //TOdas las funciones estan en PacienteDAL, enviamos los parámetros necesarios para cada función
+        public async Task<string> InsertPacienteAsync(Paciente Paciente)//Task: operacion asincrona q devuelve un valor <value>
         {
-            string path = PacientesDAL.ConexionPacientes();
-            string[] lines = System.IO.File.ReadAllLines($"{path}\\BD\\Pacientes.txt");
-            Listpacientes = new List<Paciente>();
-            foreach (var item in lines)
-            {
-                string Dni = item.Split(',')[0];
-                string Nombre = item.Split(',')[1];
-                string Apellido = item.Split(',')[2];
-                Paciente p = new Paciente(Dni, Nombre, Apellido);
-                Listpacientes.Add(p);
-            }
-            return Listpacientes;
+            string respuesta = await dal.InsertPacienteAsync(Paciente);//await: el método asincrónico no puede continuar hasta que se complete el proceso 
+            return respuesta;//retorna una cadena
         }
-
-
-
-
-
-
-
-
-
-
-        public void UpdatePaciente(string dni, Paciente paciente) {
-            foreach (Paciente item in Listpacientes)
-            {
-                if (item.Dni == dni)
-                {
-                    item.Nombre = paciente.Nombre;
-                    item.Apellido = paciente.Apellido;
-                }
-            }
-            UpdateDataBase();
-        }
-        public void InsertPaciente(Paciente paciente) {
-            Listpacientes.Add(paciente);
-            UpdateDataBase();
-        }
-
-        public int DeletePaciente(string Dni)
+        public async Task<List<Paciente>> GetPacientesAsync()//Task: operacion asincrona q devuelve un valor <value>
         {
-           int elementsRemoved= Listpacientes.RemoveAll(x => x.Dni == Dni);
-           UpdateDataBase();
-           return elementsRemoved;
+            List<Paciente> Pacientes = await dal.GetPacienteAsync();//await: el método asincrónico no puede continuar hasta que se complete el proceso 
+            return Pacientes;//retorna una lista
         }
-        private int UpdateDataBase() {
-            string path = PacientesDAL.ConexionPacientes();
-            int updatedLines = 0;
-            using (StreamWriter outputFile = new StreamWriter($"{path}\\BD\\Pacientes.txt"))
-            {
-                foreach (var item in Listpacientes)
-                {
-                    string line = $"{item.Dni},{item.Nombre},{item.Apellido}"; 
-                    outputFile.WriteLine(line);
-                    updatedLines++;
-                }
-            }
-            return updatedLines;
+        public async Task<Paciente> GetOnePacienteAsync(int IdPaciente)
+        {
+            Paciente Paciente = await dal.GetOnePacienteAsync(IdPaciente);
+            return Paciente;//retorna un objeto de clase Paciente
+        }
+        public async Task<string> UpdatePacienteAsync(Paciente Paciente)
+        {
+            string respuesta = await dal.UpdatePacienteAsync(Paciente);
+            return respuesta;//retorna una cadena
+        }
+        public async Task<string> DeletePacienteAsync(int IdPaciente)
+        {
+            string respuesta = await dal.DeletePacienteAsync(IdPaciente);
+            return respuesta;//retorna una cadena
         }
     }
 }

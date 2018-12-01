@@ -6,21 +6,18 @@ namespace Entities
 {
     public class Cita
     {
-        public string COD { get; set; }
-        public string COD_Paciente { get; set; }
-        public string COD_Especialidad { get; set; }
-        public string COD_Doctor { get; set; }
+        public int COD_Cita { get; set; }
+        public int DNI_Paciente { get; set; }
+        public int COD_Especialidad { get; set; }
+        public int COD_Doctor { get; set; }
+        public int COD_Diagnostico { get; set; }
         public string Tipo { get; set; }
         public string Estado { get; set; }
 
-        public Cita(string cod, string cod_paciente, string cod_especialidad, string cod_doctor, string tipo, string estado)
+        public override string ToString()
         {
-            COD = cod;
-            COD_Paciente = cod_paciente;
-            COD_Especialidad = cod_especialidad;
-            COD_Doctor = cod_doctor;
-            Tipo = tipo;
-            Estado = estado;
+            return string.Format("COD_Cita={0} , DNI_Paciente={1}, COD_Especialidad={2}, COD_Doctor={3}, COD_Diagnostico={4}, Tipo={5}, Estado={6}"
+                , this.COD_Cita, this.DNI_Paciente, this.COD_Especialidad, this.COD_Doctor, this.COD_Diagnostico, this.Tipo, this.Estado);
         }
     }
 }
